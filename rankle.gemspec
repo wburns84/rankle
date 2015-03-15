@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "rankle"
   spec.version       = Rankle::VERSION
   spec.authors       = ["Wil"]
-  spec.email         = ["FreeserBurns@gmail.com"]
+  spec.email         = ["rankle@william-burns.com"]
   spec.summary       = %q{TODO: Write a short summary. Required.}
   spec.description   = %q{TODO: Write a longer description. Optional.}
   spec.homepage      = ""

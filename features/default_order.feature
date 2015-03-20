@@ -7,3 +7,6 @@ Feature: Default order
     Given an empty point model
      Then ranking all has no effect
      
+  Scenario: Point model with several points
+    Given several points
+     Then ranking all has no effect

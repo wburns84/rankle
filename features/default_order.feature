@@ -5,4 +5,5 @@ Feature: Default order
 
   Scenario: Empty point model
     Given an empty point model
+     Then ranking all has no effect
      

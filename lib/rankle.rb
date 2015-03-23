@@ -4,8 +4,6 @@ require 'active_record'
 module Rankle
   module ClassMethods
     def rank
-      #RankleIndex.includes(:indexable).where(indexable_type: self).order(:position)
-      #self.joins(:indexable).where(indexable_type: self)#.order(:position)
       ranked_results = joins("INNER JOIN rankle_indices ON rankle_indices.indexable_id = #{self.to_s.tableize}.id AND rankle_indices.indexable_type = '#{self.to_s}'")
       if ranked_results.size == 0
         self

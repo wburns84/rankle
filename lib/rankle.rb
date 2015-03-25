@@ -1,5 +1,6 @@
-require "rankle/version"
 require 'active_record'
+require 'rankle/ranker'
+require 'rankle/version'
 
 module Rankle
   module ClassMethods
@@ -15,7 +16,16 @@ module Rankle
 
   module InstanceMethods
     def order= position
-      RankleIndex.where(indexable_id: id, indexable_type: self.class).first_or_create.update_attribute(:position, position)
+      rankle_index = RankleIndex.where(indexable_id: id, indexable_type: self.class).first_or_create
+      unless rankle_index.position == position
+        rankle_index_length = RankleIndex.where(indexable_type: self.class).count
+        rankle_index.update_attribute(:position, rankle_index_length - 1)
+      end
+      swap_distance  = -1
+      swap_distance *= -1 if rankle_index.position < position
+      until rankle_index.position == position
+        Ranker.swap(rankle_index, RankleIndex.where(indexable_type: self.class, position: rankle_index.position + swap_distance).first)
+      end
     end
   end
 end

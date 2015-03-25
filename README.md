@@ -1,6 +1,6 @@
 # Rankle
 
-Rankle provides a less opinionated abstraction for ordering persisted objects.
+Rankle provides multi-resource ranking.  It uses a separate join table rather than a resource specific position column.
 
 ## Installation
 

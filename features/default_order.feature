@@ -1,6 +1,6 @@
 Feature: Default order
   In order to not surprise new customers
-  As an author of rankle
+  As a consumer of rankle
   I want the default behavior to match existing behavior 
 
   Scenario: Empty point model

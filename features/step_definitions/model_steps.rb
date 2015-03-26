@@ -22,7 +22,7 @@ When(/^I rank them in reverse order$/) do
   Row.all.reverse.each_with_index { |row, index| row.update_attribute(:order, index) }
 end
 
-When(/^I move row (\d+) to row (\d+)$/) do |start_position, end_position|
+When(/^I move row (\d+) to row (-?\d+)$/) do |start_position, end_position|
   Row.all[start_position.to_i].update_attribute(:order, end_position.to_i)
 end
 
@@ -36,4 +36,8 @@ end
 
 Then(/^ranking all has no effect$/) do
   expect(Point.rank.all.to_a).to eq(Point.all.to_a)
+end
+
+Then(/^row (\d+) is in position (\d+)$/) do |row, position|
+  expect(Row.rank.all[position.to_i].id).to eq(row.to_i + 1)
 end

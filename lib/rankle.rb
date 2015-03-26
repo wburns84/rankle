@@ -16,6 +16,7 @@ module Rankle
 
   module InstanceMethods
     def order= position
+      position = 0 if position < 0
       rankle_index = RankleIndex.where(indexable_id: id, indexable_type: self.class).first_or_create
       unless rankle_index.position == position
         rankle_index_length = RankleIndex.where(indexable_type: self.class).count

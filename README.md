@@ -18,9 +18,16 @@ Or install it yourself as:
 
     $ gem install rankle
 
-## Usage
+## Simple Usage
 
-TODO: Write usage instructions here
+Simply including Rankle is intended to be ineffectual.
+
+```ruby
+class Fruit < ActiveRecord::Base
+end
+
+Fruit.all.to_a == Fruit.rank.all.to_a # true
+```
 
 ## Contributing
 

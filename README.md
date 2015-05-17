@@ -18,9 +18,9 @@ Or install it yourself as:
 
     $ gem install rankle
 
-## Simple Usage
+## Default Behavior
 
-Simply including Rankle is intended to be ineffectual.
+Simply including Rankle is intended to be ineffectual:
 
 ```ruby
 class Fruit < ActiveRecord::Base
@@ -28,6 +28,18 @@ end
 
 Fruit.all.to_a == Fruit.rank.all.to_a # true
 ```
+
+However, new records will respond to position:
+
+```ruby
+apple = Fruit.create!
+
+apple.position # 0
+```
+
+## Simple Usage
+
+You can assign an explicit ranking in several ways.
 
 ## Contributing
 

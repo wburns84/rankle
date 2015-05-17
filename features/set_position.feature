@@ -23,3 +23,12 @@ Feature: Set position
       And an orange
      Then the apple is in position 1
       And the orange is in position 0
+
+  Scenario: Override default with stabby proc (documentation)
+    Given a fruit class with an alphabetical default ranking on name
+    And an apple
+    And an orange
+    And a banana
+    Then the apple is in position 0
+    And the banana is in position 1
+    And the orange is in position 2

@@ -26,7 +26,6 @@ module Rankle
     def set_default_position
       position = self.class.rank.all.each_with_index { |record, index| break index if self.class.ranker.call(self, record) } if self.class.ranker
       position = self.class.count - 1 if position.nil? || position.is_a?(Array)
-      puts "POS: #{position}"
       self.update_attribute(:position, position)
     end
 

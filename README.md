@@ -32,14 +32,32 @@ Fruit.all.to_a == Fruit.rank.all.to_a # true
 However, new records will respond to position:
 
 ```ruby
-apple = Fruit.create!
+apple  = Fruit.create!
+orange = Fruit.create!
 
-apple.position # 0
+apple.position  # 0
+orange.position # 1
 ```
 
 ## Simple Usage
 
-You can assign an explicit ranking in several ways.
+You can assign an explicit ranking in several ways.  The position attribute can be set directly:
+
+```ruby
+apple.update_attribute :position, 1
+
+apple.position  # 1
+orange.position # 0
+```
+
+When called with an integer, the rank method will assign the position:
+
+```ruby
+apple.rank 0
+
+apple.position  # 0
+orange.position # 1
+```
 
 ## Contributing
 

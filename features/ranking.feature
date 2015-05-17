@@ -1,7 +1,7 @@
 Feature: Ranks
   In order to provide an explicit ordering
   As a developer
-  I want to rank on order
+  I want to rank on position
 
   Scenario: Reverse ranking
     Given 10 rows

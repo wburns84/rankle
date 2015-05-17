@@ -9,22 +9,22 @@ module Rankle
       if ranked_results.size == 0
         self
       else
-        ranked_results.order("rankle_indices.position")
+        ranked_results.order("rankle_indices.indexable_position")
       end
     end
   end
 
   module InstanceMethods
-    def order= position
+    def position= position
       rankle_index = RankleIndex.where(indexable_id: id, indexable_type: self.class).first_or_create
       rankle_index_length = RankleIndex.where(indexable_type: self.class).count
       position = 0 if position < 0
       position = rankle_index_length - 1 if position >= rankle_index_length
-      rankle_index.update_attribute(:position, rankle_index_length - 1) unless rankle_index.position
+      rankle_index.update_attribute(:indexable_position, rankle_index_length - 1) unless rankle_index.indexable_position
       swap_distance  = -1
-      swap_distance *= -1 if rankle_index.position < position
-      until rankle_index.position == position
-        Ranker.swap(rankle_index, RankleIndex.where(indexable_type: self.class, position: rankle_index.position + swap_distance).first)
+      swap_distance *= -1 if rankle_index.indexable_position < position
+      until rankle_index.indexable_position == position
+        Ranker.swap(rankle_index, RankleIndex.where(indexable_type: self.class, indexable_position: rankle_index.indexable_position + swap_distance).first)
       end
     end
   end

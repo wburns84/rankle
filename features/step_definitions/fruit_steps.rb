@@ -16,6 +16,6 @@ Then(/^the orange is in position (\d+)$/) do |position|
   expect(@fruit[:orange].position).to eq(position.to_i)
 end
 
-When(/^I move the apple to position (\d+)$/) do |position|
+When(/^I assign the apple's position to (\d+)$/) do |position|
   @fruit[:apple].update_attribute(:position, position.to_i)
 end

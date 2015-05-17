@@ -15,15 +15,24 @@ end
 
 Given(/^(\d+) rows in default order$/) do |count|
   DatabaseCleaner.clean
-  count.to_i.times.each { |index| Row.create!(text: index).update_attribute(:order, index) }
+  count.to_i.times.each { |index| Row.create!(text: index).update_attribute(:position, index) }
+end
+
+Given(/^(\d+) even and odd rows$/) do |count|
+  DatabaseCleaner.clean
+  count.to_i.times.each { |index| Row.create!(text: index.even? ? 'even' : 'odd').update_attribute(:position, index) }
 end
 
 When(/^I rank them in reverse order$/) do
-  Row.all.reverse.each_with_index { |row, index| row.update_attribute(:order, index) }
+  Row.all.reverse.each_with_index { |row, index| row.update_attribute(:position, index) }
 end
 
 When(/^I move row (\d+) to row (-?\d+)$/) do |start_position, end_position|
-  Row.all[start_position.to_i].update_attribute(:order, end_position.to_i)
+  Row.all[start_position.to_i].update_attribute(:position, end_position.to_i)
+end
+
+When(/^I reverse rank the even rows$/) do
+  Row.rank(:even)
 end
 
 Then(/^ranking is equivalent to all reversed$/) do

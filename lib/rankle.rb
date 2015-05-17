@@ -15,6 +15,10 @@ module Rankle
   end
 
   module InstanceMethods
+    def set_default_position
+      self.update_attribute(:position, self.class.count - 1)
+    end
+
     def position= position
       rankle_index = RankleIndex.where(indexable_id: id, indexable_type: self.class).first_or_create
       rankle_index_length = RankleIndex.where(indexable_type: self.class).count
@@ -27,8 +31,20 @@ module Rankle
         Ranker.swap(rankle_index, RankleIndex.where(indexable_type: self.class, indexable_position: rankle_index.indexable_position + swap_distance).first)
       end
     end
+
+    def position
+      RankleIndex.where(indexable_id: id, indexable_type: self.class).first_or_create.indexable_position
+    end
   end
 end
 
 ActiveRecord::Base.extend Rankle::ClassMethods
 ActiveRecord::Base.send :include, Rankle::InstanceMethods
+class ActiveRecord::Base
+  def self.inherited(child)
+    super
+    unless child == ActiveRecord::SchemaMigration || child == RankleIndex
+      child.send :after_create, :set_default_position
+    end
+  end
+end

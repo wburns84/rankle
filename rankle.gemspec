@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Rankle::VERSION
   spec.authors       = ["Wil"]
   spec.email         = ["rankle@william-burns.com"]
-  spec.summary       = %q{Rankle provides a less opinionated abstraction for ordering persisted objects.}
-  spec.description   = %q{Rankle provides a less opinionated abstraction for ordering persisted objects.}
+  spec.summary       = %q{Rankle provides multi-resource ranking.}
+  spec.description   = %q{Rankle provides multi-resource ranking.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -25,4 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "sqlite3"
   spec.add_development_dependency "rspec-expectations"
   spec.add_development_dependency "database_cleaner"
+  spec.add_development_dependency "factory_girl_rails"
 end

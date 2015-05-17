@@ -1,6 +1,11 @@
-Given(/^an empty point model$/) do
+Given(/^an empty (.+) model$/) do |klass|
   DatabaseCleaner.clean
-  Point.delete_all
+  klass.classify.constantize.delete_all
+end
+
+Given(/^several fruits$/) do
+  DatabaseCleaner.clean
+  10.times.each { |index| create :fruit }
 end
 
 Given(/^several points$/) do

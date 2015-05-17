@@ -59,6 +59,20 @@ apple.position  # 0
 orange.position # 1
 ```
 
+You can declare a proc to maintain a functional position ranking:
+
+```ruby
+class Fruit < ActiveRecord::Base
+  ranks ->(a, b) { a.name < b.name }
+end
+
+Fruit.create! name: 'apple'
+Fruit.create! name: 'orange'
+Fruit.create! name: 'banana'
+
+Fruit.rank.all.to_a # ['apple', 'banana', 'orange']
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/rankle/fork )

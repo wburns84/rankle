@@ -12,11 +12,22 @@ module Rankle
         ranked_results.order("rankle_indices.indexable_position")
       end
     end
+
+    def ranks proc
+      @ranker = proc
+    end
+
+    def ranker
+      @ranker
+    end
   end
 
   module InstanceMethods
     def set_default_position
-      self.update_attribute(:position, self.class.count - 1)
+      position = self.class.rank.all.each_with_index { |record, index| break index if self.class.ranker.call(self, record) } if self.class.ranker
+      position = self.class.count - 1 if position.nil? || position.is_a?(Array)
+      puts "POS: #{position}"
+      self.update_attribute(:position, position)
     end
 
     def position= position
@@ -32,6 +43,10 @@ module Rankle
       end
     end
 
+    def rank position
+      self.update_attribute(:position, position)
+    end
+
     def position
       RankleIndex.where(indexable_id: id, indexable_type: self.class).first_or_create.indexable_position
     end
@@ -40,6 +55,7 @@ end
 
 ActiveRecord::Base.extend Rankle::ClassMethods
 ActiveRecord::Base.send :include, Rankle::InstanceMethods
+
 class ActiveRecord::Base
   def self.inherited(child)
     super

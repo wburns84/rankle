@@ -70,7 +70,53 @@ Fruit.create! name: 'apple'
 Fruit.create! name: 'orange'
 Fruit.create! name: 'banana'
 
-Fruit.rank.all.to_a # ['apple', 'banana', 'orange']
+Fruit.rank.all.map(&:name) # ['apple', 'banana', 'orange']
+```
+
+## Multiple Resources
+
+Passing a symbol to the rank method with a position will update the position to that named rank:
+
+```ruby
+class Fruit < ActiveRecord::Base
+end
+
+class Vegetable < ActiveRecord::Base
+end
+
+apple = Fruit.create!
+carrot = Vegetable.create!
+
+apple.rank :produce, 0
+carrot.rank :produce, 1
+
+apple.position # 0
+carrot.position # 0
+
+apple.position :produce # 0
+carrot.position :produce # 1
+```
+
+Passing a symbol to the ranks method will register the resource to that ranking.  This will automatically assign the
+default position to new records within the shared ranking:
+
+```ruby
+class Fruit
+  ranks :produce
+end
+
+Class Vegetable
+  ranks :produce
+end
+
+apple = Fruit.create!
+carrot = Vegetable.create!
+
+apple.position # 0
+carrot.position # 0
+
+apple.position :produce # 0
+carrot.position :produce # 1
 ```
 
 ## Contributing

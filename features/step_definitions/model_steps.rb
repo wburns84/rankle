@@ -1,3 +1,17 @@
+Given(/^a '(.*)' model$/) do |name|
+  name.classify.constantize.delete_all
+end
+
+Given(/^an '(.*)' fruit$/) do |name|
+  @fruit ||= {}
+  @fruit[name.to_sym] = create :fruit, name: name
+end
+
+Given(/^a '(.*)' vegetable$/) do |name|
+  @vegetable ||= {}
+  @vegetable[name.to_sym] = create :vegetable, name: name
+end
+
 Given(/^an empty (.+) model$/) do |klass|
   DatabaseCleaner.clean
   klass.classify.constantize.delete_all

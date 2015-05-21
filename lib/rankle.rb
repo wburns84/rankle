@@ -38,7 +38,11 @@ module Rankle
 
     def rank name = :default, position
       rankle_index = RankleIndex.where(indexable_name: name.to_s, indexable_id: id, indexable_type: self.class).first_or_create
-      rankle_index_length = RankleIndex.where(indexable_name: name.to_s, indexable_type: self.class).count
+      if name == :default
+        rankle_index_length = RankleIndex.where(indexable_name: name.to_s, indexable_type: self.class).count
+      else
+        rankle_index_length = RankleIndex.where(indexable_name: name.to_s).count
+      end
       position = 0 if position < 0
       position = rankle_index_length - 1 if position >= rankle_index_length
       rankle_index.update_attribute(:indexable_position, rankle_index_length - 1) unless rankle_index.indexable_position

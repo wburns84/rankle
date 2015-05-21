@@ -2,6 +2,10 @@ FactoryGirl.define do
   factory :vegetable do
     sequence(:name) { |n| VEGETABLES[n-1] }
   end
+
+  #factory :legume, class: Vegetable do
+  #  sequence(:name) { |n| LEGUMES[n-1] }
+  #end
 end
 
 VEGETABLES = ['Artichoke', 'Arugula', 'Asparagus', 'Amaranth', 'Bok choy', 'Broccoflower', 'Broccoli',

@@ -90,10 +90,10 @@ carrot = Vegetable.create!
 apple.rank :produce, 0
 carrot.rank :produce, 1
 
-apple.position # 0
+apple.position  # 0
 carrot.position # 0
 
-apple.position :produce # 0
+apple.position :produce  # 0
 carrot.position :produce # 1
 ```
 
@@ -112,10 +112,10 @@ end
 apple = Fruit.create!
 carrot = Vegetable.create!
 
-apple.position # 0
+apple.position  # 0
 carrot.position # 0
 
-apple.position :produce # 0
+apple.position :produce  # 0
 carrot.position :produce # 1
 ```
 

@@ -10,7 +10,7 @@ Feature: Set position
      Then the apple is in position 1
       And the orange is in position 0
 
-  Scenario: Update position attribute
+  Scenario: Update position attribute with rank method
     Given an apple
       And an orange
      When I assign the apple's rank to 1

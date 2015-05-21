@@ -28,7 +28,8 @@ module Rankle
         position = self.class.rank.all.each_with_index { |record, index| break index if self.class.ranker.call(self, record) }
       end unless self.class.ranker.is_a?(Symbol)
       position = self.class.count - 1 if position.nil? || position.is_a?(Array)
-      self.update_attribute(:position, position)
+      rank position
+      rank self.class.ranker, position if self.class.ranker.is_a?(Symbol)
     end
 
     def position= position

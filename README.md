@@ -130,9 +130,9 @@ apple.position :reverse  # 0
 banana.position :reverse # 1
 orange.position :reverse # 2
 
-apple.rank :reverse, 2
-banana.rank :reverse, 1
-orange.rank :reverse, 0
+apple.rank :reverse, 2  # [banana, orange, apple]
+banana.rank :reverse, 1 # [banana, orange, apple]
+orange.rank :reverse, 0 # [orange, banana, apple]
 
 apple.position  # 0
 banana.position # 1

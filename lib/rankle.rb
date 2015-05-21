@@ -24,30 +24,32 @@ module Rankle
 
   module InstanceMethods
     def set_default_position
-      position = self.class.rank.all.each_with_index { |record, index| break index if self.class.ranker.call(self, record) } if self.class.ranker
+      if self.class.ranker
+        position = self.class.rank.all.each_with_index { |record, index| break index if self.class.ranker.call(self, record) }
+      end unless self.class.ranker.is_a?(Symbol)
       position = self.class.count - 1 if position.nil? || position.is_a?(Array)
       self.update_attribute(:position, position)
     end
 
     def position= position
-      rankle_index = RankleIndex.where(indexable_id: id, indexable_type: self.class).first_or_create
-      rankle_index_length = RankleIndex.where(indexable_type: self.class).count
+      rank position
+    end
+
+    def rank name = :default, position
+      rankle_index = RankleIndex.where(indexable_name: name.to_s, indexable_id: id, indexable_type: self.class).first_or_create
+      rankle_index_length = RankleIndex.where(indexable_name: name.to_s, indexable_type: self.class).count
       position = 0 if position < 0
       position = rankle_index_length - 1 if position >= rankle_index_length
       rankle_index.update_attribute(:indexable_position, rankle_index_length - 1) unless rankle_index.indexable_position
       swap_distance  = -1
       swap_distance *= -1 if rankle_index.indexable_position < position
       until rankle_index.indexable_position == position
-        Ranker.swap(rankle_index, RankleIndex.where(indexable_type: self.class, indexable_position: rankle_index.indexable_position + swap_distance).first)
+        Ranker.swap(rankle_index, RankleIndex.where(indexable_name: name.to_s, indexable_type: self.class, indexable_position: rankle_index.indexable_position + swap_distance).first)
       end
     end
 
-    def rank position
-      self.update_attribute(:position, position)
-    end
-
-    def position
-      RankleIndex.where(indexable_id: id, indexable_type: self.class).first_or_create.indexable_position
+    def position name = :default
+      RankleIndex.where(indexable_name: name.to_s, indexable_id: id, indexable_type: self.class).first_or_create.indexable_position
     end
   end
 end

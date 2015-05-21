@@ -6,10 +6,10 @@ When(/^I assign the apple's rank to (\d+)$/) do |position|
   @fruit[:apple].rank position.to_i
 end
 
-Given(/^a fruit class with an alphabetical default ranking on name$/) do
-  Fruit.send :ranks, ->(a, b) { a.name < b.name }
+When(/^I assign the (.*)'s '(.*)' rank to '(\d+)'$/) do |type, name, position|
+  @fruit[type.to_sym].rank name.to_sym, position.to_i
 end
 
-Given(/^a fruit class with a reverse alphabetical default ranking on name$/) do
-  Fruit.send :ranks, ->(a, b) { a.name > b.name }
+Then(/^the (.*)'s '(.*)' rank is '(\d+)'$/) do |type, name, position|
+  expect(@fruit[type.to_sym].position name).to eq(position.to_i)
 end

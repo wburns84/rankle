@@ -21,6 +21,7 @@ ActiveRecord::Schema.define do
   end
 
   create_table :rankle_indices, :force => true do |t|
+    t.string  :indexable_name
     t.integer :indexable_id
     t.string  :indexable_type
     t.integer :indexable_position

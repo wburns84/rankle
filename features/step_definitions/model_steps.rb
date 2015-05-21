@@ -55,3 +55,15 @@ end
 Then(/^row (\d+) is in position (\d+)$/) do |row, position|
   expect(Row.rank.all[position.to_i].id).to eq(row.to_i + 1)
 end
+
+Given(/^a fruit class with an alphabetical default ranking on name$/) do
+  Fruit.send :ranks, ->(a, b) { a.name < b.name }
+end
+
+Given(/^a fruit class with a reverse alphabetical default ranking on name$/) do
+  Fruit.send :ranks, ->(a, b) { a.name > b.name }
+end
+
+Given(/^a 'fruit' class with a 'reverse' ranking$/) do
+  Fruit.send :ranks, :reverse
+end

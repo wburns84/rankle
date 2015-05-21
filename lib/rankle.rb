@@ -29,7 +29,9 @@ module Rankle
       end unless self.class.ranker.is_a?(Symbol)
       position = self.class.count - 1 if position.nil? || position.is_a?(Array)
       rank position
-      rank self.class.ranker, position if self.class.ranker.is_a?(Symbol)
+      if self.class.ranker.is_a?(Symbol)
+        rank self.class.ranker, RankleIndex.where(indexable_name: self.class.ranker).count
+      end
     end
 
     def position= position
@@ -37,11 +39,11 @@ module Rankle
     end
 
     def rank name = :default, position
-      rankle_index = RankleIndex.where(indexable_name: name.to_s, indexable_id: id, indexable_type: self.class).first_or_create
-      if name == :default
-        rankle_index_length = RankleIndex.where(indexable_name: name.to_s, indexable_type: self.class).count
+      rankle_index = RankleIndex.where(indexable_name: name.to_s, indexable_id: id, indexable_type: self.class).first_or_create!
+      rankle_index_length = if name == :default
+        RankleIndex.where(indexable_name: name.to_s, indexable_type: self.class).count
       else
-        rankle_index_length = RankleIndex.where(indexable_name: name.to_s).count
+        RankleIndex.where(indexable_name: name.to_s).count
       end
       position = 0 if position < 0
       position = rankle_index_length - 1 if position >= rankle_index_length
@@ -49,7 +51,11 @@ module Rankle
       swap_distance  = -1
       swap_distance *= -1 if rankle_index.indexable_position < position
       until rankle_index.indexable_position == position
-        Ranker.swap(rankle_index, RankleIndex.where(indexable_name: name.to_s, indexable_type: self.class, indexable_position: rankle_index.indexable_position + swap_distance).first)
+        if name == :default
+          Ranker.swap(rankle_index, RankleIndex.where(indexable_name: name.to_s, indexable_type: self.class, indexable_position: rankle_index.indexable_position + swap_distance).first)
+        else
+          Ranker.swap(rankle_index, RankleIndex.where(indexable_name: name.to_s, indexable_position: rankle_index.indexable_position + swap_distance).first)
+        end
       end
     end
 

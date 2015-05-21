@@ -1,6 +1,13 @@
 Given(/^a '(.*)' model$/) do |name|
+  DatabaseCleaner.clean
   name.classify.constantize.delete_all
 end
+
+Given(/^a '(.*)' model with a '(.*)' ranking$/) do |klass, ranking|
+  step "a '#{klass}' model"
+  klass.classify.constantize.send :ranks, ranking.to_sym
+end
+
 
 Given(/^an '(.*)' fruit$/) do |name|
   @fruit ||= {}

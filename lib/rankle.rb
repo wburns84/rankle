@@ -15,23 +15,19 @@ module Rankle
     end
 
     def ranks proc
-      @ranker = proc
-    end
-
-    def ranker
-      @ranker
+      Ranker.put self, proc
     end
   end
 
   module InstanceMethods
     def set_default_position
-      if self.class.ranker
-        position = self.class.ranked.each_with_index { |record, index| break index if self.class.ranker.call(self, record) }
-      end unless self.class.ranker.is_a?(Symbol)
+      if Ranker.get(self.class)
+        position = self.class.ranked.each_with_index { |record, index| break index if Ranker.get(self.class).call(self, record) }
+      end unless Ranker.get(self.class).is_a?(Symbol)
       position = self.class.count - 1 if position.nil? || position.is_a?(Array)
       rank position
-      if self.class.ranker.is_a?(Symbol)
-        rank self.class.ranker, RankleIndex.where(indexable_name: self.class.ranker).count
+      if Ranker.get(self.class).is_a?(Symbol)
+        rank Ranker.get(self.class), RankleIndex.where(indexable_name: Ranker.get(self.class)).count
       end
     end
 

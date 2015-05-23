@@ -4,7 +4,7 @@ require 'rankle/version'
 
 module Rankle
   module ClassMethods
-    def rank
+    def ranked
       ranked_results = joins("INNER JOIN rankle_indices ON rankle_indices.indexable_id = #{self.to_s.tableize}.id AND rankle_indices.indexable_type = '#{self.to_s}'")
       if ranked_results.size == 0
         self
@@ -25,7 +25,7 @@ module Rankle
   module InstanceMethods
     def set_default_position
       if self.class.ranker
-        position = self.class.rank.all.each_with_index { |record, index| break index if self.class.ranker.call(self, record) }
+        position = self.class.ranked.all.each_with_index { |record, index| break index if self.class.ranker.call(self, record) }
       end unless self.class.ranker.is_a?(Symbol)
       position = self.class.count - 1 if position.nil? || position.is_a?(Array)
       rank position

@@ -62,19 +62,19 @@ When(/^I reverse rank the even rows$/) do
 end
 
 Then(/^ranking is equivalent to all reversed$/) do
-  expect(Row.rank.all.to_a).to eq(Row.all.to_a.reverse)
+  expect(Row.ranked.all.to_a).to eq(Row.all.to_a.reverse)
 end
 
 Then(/^ranking is equivalent to all rotated (\-\d+)$/) do |positions|
-  expect(Row.rank.all.to_a).to eq(Row.all.to_a.rotate(positions.to_i))
+  expect(Row.ranked.all.to_a).to eq(Row.all.to_a.rotate(positions.to_i))
 end
 
 Then(/^ranking all has no effect$/) do
-  expect(Point.rank.all.to_a).to eq(Point.all.to_a)
+  expect(Point.ranked.all.to_a).to eq(Point.all.to_a)
 end
 
 Then(/^row (\d+) is in position (\d+)$/) do |row, position|
-  expect(Row.rank.all[position.to_i].id).to eq(row.to_i + 1)
+  expect(Row.ranked.all[position.to_i].id).to eq(row.to_i + 1)
 end
 
 Given(/^a fruit class with an alphabetical default ranking on name$/) do

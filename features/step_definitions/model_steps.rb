@@ -1,3 +1,24 @@
+Given(/^a '(.*)' model$/) do |name|
+  DatabaseCleaner.clean
+  name.classify.constantize.delete_all
+end
+
+Given(/^a '(.*)' model with a '(.*)' ranking$/) do |klass, ranking|
+  step "a '#{klass}' model"
+  klass.classify.constantize.send :ranks, ranking.to_sym
+end
+
+
+Given(/^an '(.*)' fruit$/) do |name|
+  @fruit ||= {}
+  @fruit[name.to_sym] = create :fruit, name: name
+end
+
+Given(/^a '(.*)' vegetable$/) do |name|
+  @vegetable ||= {}
+  @vegetable[name.to_sym] = create :vegetable, name: name
+end
+
 Given(/^an empty (.+) model$/) do |klass|
   DatabaseCleaner.clean
   klass.classify.constantize.delete_all
@@ -41,17 +62,29 @@ When(/^I reverse rank the even rows$/) do
 end
 
 Then(/^ranking is equivalent to all reversed$/) do
-  expect(Row.rank.all.to_a).to eq(Row.all.to_a.reverse)
+  expect(Row.ranked.to_a).to eq(Row.all.to_a.reverse)
 end
 
 Then(/^ranking is equivalent to all rotated (\-\d+)$/) do |positions|
-  expect(Row.rank.all.to_a).to eq(Row.all.to_a.rotate(positions.to_i))
+  expect(Row.ranked.to_a).to eq(Row.all.to_a.rotate(positions.to_i))
 end
 
 Then(/^ranking all has no effect$/) do
-  expect(Point.rank.all.to_a).to eq(Point.all.to_a)
+  expect(Point.ranked.to_a).to eq(Point.all.to_a)
 end
 
 Then(/^row (\d+) is in position (\d+)$/) do |row, position|
-  expect(Row.rank.all[position.to_i].id).to eq(row.to_i + 1)
+  expect(Row.ranked[position.to_i].id).to eq(row.to_i + 1)
+end
+
+Given(/^a fruit class with an alphabetical default ranking on name$/) do
+  Fruit.send :ranks, ->(a, b) { a.name < b.name }
+end
+
+Given(/^a fruit class with a reverse alphabetical default ranking on name$/) do
+  Fruit.send :ranks, ->(a, b) { a.name > b.name }
+end
+
+Given(/^a 'fruit' class with a 'reverse' ranking$/) do
+  Fruit.send :ranks, :reverse
 end

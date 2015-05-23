@@ -26,7 +26,7 @@ Simply including Rankle is intended to be ineffectual:
 class Fruit < ActiveRecord::Base
 end
 
-Fruit.all.to_a == Fruit.ranked.all.to_a # true
+Fruit.all.to_a == Fruit.ranked.to_a # true
 ```
 
 However, new records will respond to position:
@@ -70,7 +70,7 @@ Fruit.create! name: 'apple'
 Fruit.create! name: 'orange'
 Fruit.create! name: 'banana'
 
-Fruit.ranked.all.map(&:name) # ['apple', 'banana', 'orange']
+Fruit.ranked.map(&:name) # ['apple', 'banana', 'orange']
 ```
 
 ## Named Ranking

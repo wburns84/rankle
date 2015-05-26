@@ -26,4 +26,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec-expectations"
   spec.add_development_dependency "database_cleaner"
   spec.add_development_dependency "factory_girl_rails"
+  spec.add_development_dependency "yard"
 end

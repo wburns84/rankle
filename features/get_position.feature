@@ -12,6 +12,6 @@ Feature: Get position
   Scenario: Custom ranking
     Given an apple
       And an orange
-     When I move the apple to position 1
+     When I assign the apple's position to 1
      Then the apple is in position 1
       And the orange is in position 0

@@ -10,3 +10,9 @@ Feature: Default ranking
   Scenario: Fruit model with several fruits
     Given several fruits
      Then ranking all has no effect
+
+  Scenario: Ranked fruit
+    Given an empty fruit model
+      And an apple
+      And an orange
+     Then the ranked fruit array is [:apple, :orange]

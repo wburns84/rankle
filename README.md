@@ -49,6 +49,15 @@ apple.position  # 0
 orange.position # 1
 ```
 
+The ranked method provides an ordered ActiveRecord::Relation:
+
+```ruby
+Fruit.create! name, 'apple'
+Fruit.create! name, 'orange'
+
+Fruit.ranked.map(&:name) # ['apple', 'orange']
+```
+
 ## Simple Usage
 
 You can assign an explicit ranking in several ways.  The position attribute can be set directly:

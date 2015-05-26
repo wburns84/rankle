@@ -88,3 +88,7 @@ end
 Given(/^a 'fruit' class with a 'reverse' ranking$/) do
   Fruit.send :ranks, :reverse
 end
+
+Then(/^the ranked fruit array is \[:apple, :orange\]$/) do
+  expect(Fruit.ranked.map(&:name)).to eq(['apple', 'orange'])
+end

@@ -89,6 +89,8 @@ Given(/^a 'fruit' class with a 'reverse' ranking$/) do
   Fruit.send :ranks, :reverse
 end
 
-Then(/^the ranked fruit array is \[:apple, :orange\]$/) do
-  expect(Fruit.ranked.map(&:name)).to eq(['apple', 'orange'])
+Then(/^the ranked fruit array is \[(.*)\]$/) do |names|
+  expect(Fruit.ranked.map(&:name)).to eq(names.split(',').map do |name|
+    @fruit[name.strip.to_sym].name
+  end)
 end

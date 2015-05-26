@@ -11,8 +11,8 @@ module Rankle
   # Class methods added to ActiveRecord models
   module ClassMethods
     # @return [ActiveRecord::Relation]
-    def ranked
-      ranked_results = joins("INNER JOIN rankle_indices ON rankle_indices.indexable_id = #{self.to_s.tableize}.id AND rankle_indices.indexable_type = '#{self.to_s}'")
+    def ranked name = :default
+      ranked_results = joins("INNER JOIN rankle_indices ON rankle_indices.indexable_name = '#{name}' AND rankle_indices.indexable_id = #{self.to_s.tableize}.id AND rankle_indices.indexable_type = '#{self.to_s}'")
       if ranked_results.size == 0
         self.all
       else

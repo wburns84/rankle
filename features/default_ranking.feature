@@ -15,4 +15,4 @@ Feature: Default ranking
     Given an empty fruit model
       And an apple
       And an orange
-     Then the ranked fruit array is [:apple, :orange]
+     Then the ranked fruit array is [apple, orange]

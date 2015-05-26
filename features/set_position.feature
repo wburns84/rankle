@@ -4,11 +4,13 @@ Feature: Set position
   I want to set an element's position
 
   Scenario: Update position attribute
-    Given an apple
-      And an orange
+    Given an empty fruit model
+      And an 'apple' fruit
+      And an 'orange' fruit
      When I update the apple's position attribute to 1
      Then the apple is in position 1
       And the orange is in position 0
+     Then the ranked fruit array is [orange, apple]
 
   Scenario: Update position attribute with rank method
     Given an apple

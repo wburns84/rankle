@@ -67,6 +67,8 @@ apple.update_attribute :position, 1
 
 apple.position  # 1
 orange.position # 0
+
+Fruit.ranked.map(&:name) # ['orange', 'apple']
 ```
 
 When called with an integer, the rank method will assign the position:

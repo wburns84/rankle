@@ -14,6 +14,8 @@ Feature: Multi-resource ranking
       And the 'carrot' vegetable's 'default' rank is '0'
       And the 'apple' fruit's 'produce' rank is '0'
       And the 'carrot' vegetable's 'produce' rank is '1'
+      And the default ranked fruit array is [apple]
+      And the default ranked vegetable array is [carrot]
 
   Scenario: Default ranking
     Given a 'fruit' model with a 'produce' ranking
@@ -24,3 +26,5 @@ Feature: Multi-resource ranking
       And the 'carrot' vegetable's 'default' rank is '0'
       And the 'apple' fruit's 'produce' rank is '0'
       And the 'carrot' vegetable's 'produce' rank is '1'
+      And the default ranked fruit array is [apple]
+      And the default ranked vegetable array is [carrot]

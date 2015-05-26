@@ -26,7 +26,11 @@ end
 
 Given(/^several fruits$/) do
   DatabaseCleaner.clean
-  10.times.each { |index| create :fruit }
+  @fruit ||= {}
+  10.times.each do |index|
+    fruit = create :fruit
+    @fruit[fruit.name.to_sym] = fruit
+  end
 end
 
 Given(/^several points$/) do
@@ -89,8 +93,9 @@ Given(/^a 'fruit' class with a 'reverse' ranking$/) do
   Fruit.send :ranks, :reverse
 end
 
-Then(/^the ranked fruit array is \[(.*)\]$/) do |names|
-  expect(Fruit.ranked.map(&:name)).to eq(names.split(',').map do |name|
-    @fruit[name.strip.to_sym].name
+Then(/^the (.*)ranked (.*) array is \[(.*)\]$/) do |ranker, klass, names|
+  ranker = 'default' if ranker.blank?
+  expect(klass.classify.constantize.ranked(ranker.strip.to_sym).map(&:name)).to eq(names.split(',').map do |name|
+    @fruit[name.strip.to_sym].name rescue @vegetable[name.strip.to_sym].name
   end)
 end

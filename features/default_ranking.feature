@@ -6,10 +6,12 @@ Feature: Default ranking
   Scenario: Empty fruit model
     Given an empty fruit model
      Then ranking all has no effect
+      And the ranked fruit array is []
      
   Scenario: Fruit model with several fruits
     Given several fruits
      Then ranking all has no effect
+      And the ranked fruit array is [Apple, Apricot, Banana, Bilberry, Blackberry, Blackcurrant, Blueberry, Boysenberry, Cantaloupe, Currant]
 
   Scenario: Ranked fruit
     Given an empty fruit model

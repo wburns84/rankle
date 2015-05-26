@@ -8,6 +8,7 @@ Feature: Get position
       And an orange
      Then the apple is in position 0
       And the orange is in position 1
+      And the ranked fruit array is [apple, orange]
 
   Scenario: Custom ranking
     Given an apple
@@ -15,3 +16,4 @@ Feature: Get position
      When I assign the apple's position to 1
      Then the apple is in position 1
       And the orange is in position 0
+      And the ranked fruit array is [orange, apple]

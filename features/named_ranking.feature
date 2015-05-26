@@ -12,6 +12,8 @@ Feature: Named ranking
       And the 'orange' fruit's 'default' rank is '1'
       And the 'apple' fruit's 'reverse' rank is '1'
       And the 'orange' fruit's 'reverse' rank is '0'
+      And the default ranked fruit array is [apple, orange]
+      And the reverse ranked fruit array is [orange, apple]
 
   Scenario: Growing ranking
     Given an apple
@@ -26,6 +28,8 @@ Feature: Named ranking
       And the 'apple' fruit's 'reverse' rank is '1'
       And the 'banana' fruit's 'reverse' rank is '2'
       And the 'orange' fruit's 'reverse' rank is '0'
+      And the default ranked fruit array is [apple, banana, orange]
+      And the reverse ranked fruit array is [orange, apple, banana]
 
   Scenario: Registered ranking
     Given a 'fruit' class with a 'reverse' ranking
@@ -41,3 +45,5 @@ Feature: Named ranking
       And the 'apple' fruit's 'reverse' rank is '2'
       And the 'banana' fruit's 'reverse' rank is '1'
       And the 'orange' fruit's 'reverse' rank is '0'
+      And the default ranked fruit array is [apple, banana, orange]
+      And the reverse ranked fruit array is [orange, banana, apple]

@@ -18,6 +18,8 @@ Feature: Set position
      When I assign the apple's rank to 1
      Then the apple is in position 1
       And the orange is in position 0
+     Then the ranked fruit array is [orange, apple]
+
 
   Scenario: Override default with stabby proc
     Given a fruit class with a reverse alphabetical default ranking on name
@@ -25,6 +27,8 @@ Feature: Set position
       And an orange
      Then the apple is in position 1
       And the orange is in position 0
+     Then the ranked fruit array is [orange, apple]
+
 
   Scenario: Override default with stabby proc (documentation)
     Given a fruit class with an alphabetical default ranking on name
@@ -34,3 +38,4 @@ Feature: Set position
      Then the apple is in position 0
       And the banana is in position 1
       And the orange is in position 2
+     Then the ranked fruit array is [apple, banana, orange]

@@ -164,7 +164,7 @@ end
 class Vegetable < ActiveRecord::Base
 end
 
-apple = Fruit.create!
+apple  = Fruit.create!
 carrot = Vegetable.create!
 
 apple.rank  :produce, 0

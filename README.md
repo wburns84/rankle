@@ -22,15 +22,11 @@ Or install it yourself as:
 
 Before you can use Rankle, you'll need to generate the index table.  Rankle provides a generator to assist with this:
 
-```ruby
-rails g rankle:install
-```
+    $ rails g rankle:install
 
 The generator only creates the migration file.  You'll still need to run the migration:
 
-```ruby
-rake db:migrate
-```
+    $ rake db:migrate
 
 ## Default Behavior
 

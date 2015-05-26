@@ -2,7 +2,13 @@ require 'active_record'
 require 'rankle/ranker'
 require 'rankle/version'
 
+# Rankle provides multi-resource ranking for ActiveRecord objects.
+#
+# This top-level module provides a namespace for all Rankle code.
+#
+# @author William Burns
 module Rankle
+  # Class methods added to ActiveRecord models
   module ClassMethods
     # @return [ActiveRecord::Relation]
     def ranked
@@ -19,6 +25,7 @@ module Rankle
     end
   end
 
+  # instance methods added to ActiveRecord models
   module InstanceMethods
     def set_default_position
       if Ranker.get(self.class)
@@ -31,6 +38,10 @@ module Rankle
       end
     end
 
+    # Assigns an explicit position to the record
+    #
+    # @param format [Integer] the new position
+    # @return [Integer or Exception] the new position or an exception if the position could not be set
     def position= position
       rank position
     end

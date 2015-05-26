@@ -78,6 +78,8 @@ apple.rank 0
 
 apple.position  # 0
 orange.position # 1
+
+Fruit.ranked.map(&:name) # ['apple', 'orange']
 ```
 
 You can declare a proc to maintain a functional position ranking:
@@ -110,6 +112,9 @@ Passing a symbol to the rank method with a position will update the position to 
 
   apple.position  :reverse # 1
   orange.position :reverse # 0
+
+  Fruit.ranked.map(&:name)           # ['apple', 'orange']
+  Fruit.ranked(:reverse).map(&:name) # ['orange', 'apple']
 ```
 
 Since positions are not stored with an absolute value, the available positions increases by 1 with each call to the rank method:
@@ -130,6 +135,9 @@ Since positions are not stored with an absolute value, the available positions i
   apple.position  :reverse # 1
   banana.position :reverse # 2
   orange.position :reverse # 0
+
+  Fruit.ranked.map(&:name)           # ['apple', 'banana', 'orange']
+  Fruit.ranked(:reverse).map(&:name) # ['orange', 'apple', 'banana']
 ```
 
 You can bypass this issue by registering the ranking on the class:
@@ -162,6 +170,9 @@ orange.position # 2
 apple.position  :reverse # 2
 banana.position :reverse # 1
 orange.position :reverse # 0
+
+Fruit.ranked.map(&:name)           # ['apple', 'banana', 'orange']
+Fruit.ranked(:reverse).map(&:name) # ['orange', 'banana', 'apple']
 ```
 
 ## Multiple Resources
@@ -186,6 +197,19 @@ carrot.position # 0
 
 apple.position  :produce # 0
 carrot.position :produce # 1
+
+Fruit.ranked.map(&:name)               # ['apple']
+Vegetable.ranked.map(&:name)           # ['carrot']
+
+Fruit.ranked(:produce).map(&:name)     # ['apple']
+Vegetable.ranked(:produce).map(&:name) # ['carrot']
+```
+
+Notice that the ranked method can't increase the scope of your query.  Multi-resource relations can be accessed through
+the Rankle class which serves as the global ranking scope.
+
+```ruby
+Rankle.ranked(:produce).map(&:name)    # ['apple', 'carrot']
 ```
 
 Passing a symbol to the ranks method will register the resource to that ranking.  This will automatically assign the

@@ -12,16 +12,24 @@ module Rankle
   module ClassMethods
     # @return [ActiveRecord::Relation]
     def ranked name = :default
-      ranked_results = joins("INNER JOIN rankle_indices ON rankle_indices.indexable_name = '#{name}' AND rankle_indices.indexable_id = #{self.to_s.tableize}.id AND rankle_indices.indexable_type = '#{self.to_s}'")
+      ranked_results = joins("INNER JOIN rankle_indices ON rankle_indices.indexable_name = '#{name}' AND
+                                                           rankle_indices.indexable_id   = #{self.to_s.tableize}.id AND
+                                                           rankle_indices.indexable_type = '#{self.to_s}'")
       if ranked_results.size == 0
         self.all
       else
-        ranked_results.order("rankle_indices.indexable_position")
+        ranked_results.order('rankle_indices.indexable_position')
       end
     end
 
     def ranks proc
       Ranker.put self, proc
+    end
+  end
+
+  def self.ranked name = :default
+    RankleIndex.where(indexable_name: name).order(:indexable_position).map do |duck|
+      duck.indexable_type.classify.constantize.find(duck.indexable_id)
     end
   end
 

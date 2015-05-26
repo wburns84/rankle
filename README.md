@@ -18,6 +18,20 @@ Or install it yourself as:
 
     $ gem install rankle
 
+## Getting Started
+
+Before you can use Rankle, you'll need to generate the index table.  Rankle provides a generator to assist with this:
+
+```ruby
+rails g rankle:install
+```
+
+The generator only creates the migration file.  You'll still need to run the migration:
+
+```ruby
+rake db:migrate
+```
+
 ## Default Behavior
 
 Simply including Rankle is intended to be ineffectual:

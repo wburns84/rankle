@@ -2,8 +2,8 @@
 
 Rankle provides multi-resource ranking.  It uses a separate join table rather than a resource specific position column.
 
-** Rankle is currently in a pre-release state.  It is not optimized for performance and should not be used in
-production applications.  Future work will be tracked with issues. **
+**Rankle is currently in a pre-release state.  It is not optimized for performance and should not be used in
+production applications.  Future work will be tracked with issues.**
 
 ## Installation
 

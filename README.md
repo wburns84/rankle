@@ -88,16 +88,16 @@ Fruit.ranked.map(&:name) # ['apple', 'banana', 'orange']
 Passing a symbol to the rank method with a position will update the position to that named rank:
 
 ```ruby
-  apple = Fruit.create!
+  apple  = Fruit.create!
   orange = Fruit.create!
 
-  apple.rank :reverse, 1
+  apple.rank  :reverse, 1
   orange.rank :reverse, 0
 
   apple.position  # 0
   orange.position # 1
 
-  apple.position :reverse  # 1
+  apple.position  :reverse # 1
   orange.position :reverse # 0
 ```
 
@@ -108,7 +108,7 @@ Since positions are not stored with an absolute value, the available positions i
   banana = Fruit.create!
   orange = Fruit.create!
 
-  apple.rank :reverse, 2  # [apple]
+  apple.rank  :reverse, 2 # [apple]
   banana.rank :reverse, 1 # [banana, apple]
   orange.rank :reverse, 0 # [orange, banana, apple]
 
@@ -116,7 +116,7 @@ Since positions are not stored with an absolute value, the available positions i
   banana.position # 1
   orange.position # 2
 
-  apple.position :reverse  # 1
+  apple.position  :reverse # 1
   banana.position :reverse # 2
   orange.position :reverse # 0
 ```
@@ -128,7 +128,7 @@ class Fruit < ActiveRecord::Base
   ranks :reverse
 end
 
-apple = Fruit.create!
+apple  = Fruit.create!
 banana = Fruit.create!
 orange = Fruit.create!
 
@@ -136,11 +136,11 @@ apple.position  # 0
 banana.position # 1
 orange.position # 2
 
-apple.position :reverse  # 0
+apple.position  :reverse # 0
 banana.position :reverse # 1
 orange.position :reverse # 2
 
-apple.rank :reverse, 2  # [banana, orange, apple]
+apple.rank  :reverse, 2 # [banana, orange, apple]
 banana.rank :reverse, 1 # [banana, orange, apple]
 orange.rank :reverse, 0 # [orange, banana, apple]
 
@@ -148,7 +148,7 @@ apple.position  # 0
 banana.position # 1
 orange.position # 2
 
-apple.position :reverse  # 2
+apple.position  :reverse # 2
 banana.position :reverse # 1
 orange.position :reverse # 0
 ```
@@ -167,13 +167,13 @@ end
 apple = Fruit.create!
 carrot = Vegetable.create!
 
-apple.rank :produce, 0
+apple.rank  :produce, 0
 carrot.rank :produce, 1
 
 apple.position  # 0
 carrot.position # 0
 
-apple.position :produce  # 0
+apple.position  :produce # 0
 carrot.position :produce # 1
 ```
 
@@ -195,7 +195,7 @@ carrot = Vegetable.create!
 apple.position  # 0
 carrot.position # 0
 
-apple.position :produce  # 0
+apple.position  :produce # 0
 carrot.position :produce # 1
 ```
 

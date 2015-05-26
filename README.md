@@ -104,43 +104,43 @@ Fruit.ranked.map(&:name) # ['apple', 'banana', 'orange']
 Passing a symbol to the rank method with a position will update the position to that named rank:
 
 ```ruby
-  apple  = Fruit.create!
-  orange = Fruit.create!
+apple  = Fruit.create!
+orange = Fruit.create!
 
-  apple.rank  :reverse, 1
-  orange.rank :reverse, 0
+apple.rank  :reverse, 1
+orange.rank :reverse, 0
 
-  apple.position  # 0
-  orange.position # 1
+apple.position  # 0
+orange.position # 1
 
-  apple.position  :reverse # 1
-  orange.position :reverse # 0
+apple.position  :reverse # 1
+orange.position :reverse # 0
 
-  Fruit.ranked.map(&:name)           # ['apple', 'orange']
-  Fruit.ranked(:reverse).map(&:name) # ['orange', 'apple']
+Fruit.ranked.map(&:name)           # ['apple', 'orange']
+Fruit.ranked(:reverse).map(&:name) # ['orange', 'apple']
 ```
 
 Since positions are not stored with an absolute value, the available positions increases by 1 with each call to the rank method:
 
 ```ruby
-  apple = Fruit.create!
-  banana = Fruit.create!
-  orange = Fruit.create!
+apple = Fruit.create!
+banana = Fruit.create!
+orange = Fruit.create!
 
-  apple.rank  :reverse, 2 # [apple]
-  banana.rank :reverse, 1 # [banana, apple]
-  orange.rank :reverse, 0 # [orange, banana, apple]
+apple.rank  :reverse, 2 # [apple]
+banana.rank :reverse, 1 # [banana, apple]
+orange.rank :reverse, 0 # [orange, banana, apple]
 
-  apple.position  # 0
-  banana.position # 1
-  orange.position # 2
+apple.position  # 0
+banana.position # 1
+orange.position # 2
 
-  apple.position  :reverse # 1
-  banana.position :reverse # 2
-  orange.position :reverse # 0
+apple.position  :reverse # 1
+banana.position :reverse # 2
+orange.position :reverse # 0
 
-  Fruit.ranked.map(&:name)           # ['apple', 'banana', 'orange']
-  Fruit.ranked(:reverse).map(&:name) # ['orange', 'apple', 'banana']
+Fruit.ranked.map(&:name)           # ['apple', 'banana', 'orange']
+Fruit.ranked(:reverse).map(&:name) # ['orange', 'apple', 'banana']
 ```
 
 You can bypass this issue by registering the ranking on the class:

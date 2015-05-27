@@ -55,8 +55,8 @@ orange.position # 1
 The ranked method provides an ordered ActiveRecord::Relation:
 
 ```ruby
-Fruit.create! name, 'apple'
-Fruit.create! name, 'orange'
+Fruit.create! name: 'apple'
+Fruit.create! name: 'orange'
 
 Fruit.ranked.map(&:name) # ['apple', 'orange']
 ```

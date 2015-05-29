@@ -8,8 +8,8 @@ ActiveRecord::Base.establish_connection(
     database: 'rankle.sqlite3'
 )
 
-load File.dirname(__FILE__) + '/support/schema.rb'
-load File.dirname(__FILE__) + '/support/models.rb'
+load File.dirname(__FILE__) + '/schema.rb'
+load File.dirname(__FILE__) + '/models.rb'
 
 DatabaseCleaner.strategy = :truncation
 

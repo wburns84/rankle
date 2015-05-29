@@ -1,4 +1,4 @@
-require_relative './test_helper'
+require_relative './support/test_helper'
 
 class TestDefaultBehavior < Minitest::Test
   def test_it_is_ineffectual

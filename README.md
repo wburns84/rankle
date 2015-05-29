@@ -189,8 +189,8 @@ end
 class Vegetable < ActiveRecord::Base
 end
 
-apple  = Fruit.create!
-carrot = Vegetable.create!
+apple  = Fruit.create!     name: 'apple'
+carrot = Vegetable.create! name: 'carrot'
 
 apple.rank  :produce, 0
 carrot.rank :produce, 1
@@ -227,8 +227,8 @@ Class Vegetable
   ranks :produce
 end
 
-apple = Fruit.create!
-carrot = Vegetable.create!
+apple  = Fruit.create!     name: 'apple'
+carrot = Vegetable.create! name: 'vegetable'
 
 apple.position  # 0
 carrot.position # 0

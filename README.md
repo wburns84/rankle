@@ -237,6 +237,29 @@ apple.position  :produce # 0
 carrot.position :produce # 1
 ```
 
+## Scoped Ranking
+
+ActiveRecord scopes work in conjunction to further restrict the ranking:
+
+```ruby
+class Fruit
+  scope :berries, -> { where "name LIKE ?", '%berry' }
+end
+
+Fruit.create! name: 'apple'
+Fruit.create! name: 'apricot'
+Fruit.create! name: 'banana'
+Fruit.create! name: 'bilberry'
+Fruit.create! name: 'blackberry'
+Fruit.create! name: 'blackcurrant'
+Fruit.create! name: 'blueberry'
+Fruit.create! name: 'boysenberry'
+Fruit.create! name: 'cantaloupe'
+
+Fruit.ranked.map(&:name)         # ['apple', 'apricot', 'banana', 'bilberry', 'blackberry', 'blackcurrant', 'blueberry', 'boysenberry', 'cantaloupe']
+Fruit.berries.ranked.map(&:name) # ['bilberry', 'blackberry', 'blueberry', 'boysenberry']
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/rankle/fork )

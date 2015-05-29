@@ -104,8 +104,8 @@ Fruit.ranked.map(&:name) # ['apple', 'banana', 'orange']
 Passing a symbol to the rank method with a position will update the position to that named rank:
 
 ```ruby
-apple  = Fruit.create!
-orange = Fruit.create!
+apple  = Fruit.create! name: 'apple'
+orange = Fruit.create! name: 'orange'
 
 apple.rank  :reverse, 1
 orange.rank :reverse, 0
@@ -123,9 +123,9 @@ Fruit.ranked(:reverse).map(&:name) # ['orange', 'apple']
 Since positions are not stored with an absolute value, the available positions increases by 1 with each call to the rank method:
 
 ```ruby
-apple = Fruit.create!
-banana = Fruit.create!
-orange = Fruit.create!
+apple  = Fruit.create! name: 'apple'
+banana = Fruit.create! name: 'banana'
+orange = Fruit.create! name: 'orange'
 
 apple.rank  :reverse, 2 # [apple]
 banana.rank :reverse, 1 # [banana, apple]
@@ -150,9 +150,9 @@ class Fruit < ActiveRecord::Base
   ranks :reverse
 end
 
-apple  = Fruit.create!
-banana = Fruit.create!
-orange = Fruit.create!
+apple  = Fruit.create! name: 'apple'
+banana = Fruit.create! name: 'banana'
+orange = Fruit.create! name: 'orange'
 
 apple.position  # 0
 banana.position # 1

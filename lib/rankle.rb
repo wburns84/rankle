@@ -29,9 +29,7 @@ module Rankle
   end
 
   def self.ranked name = :default
-    RankleIndex.where(indexable_name: name).order(:indexable_position).map do |duck|
-      duck.indexable_type.classify.constantize.find(duck.indexable_id)
-    end
+    RankleIndex.ranked name
   end
 
   # instance methods added to ActiveRecord models
@@ -56,28 +54,11 @@ module Rankle
     end
 
     def rank name = :default, position
-      rankle_index = RankleIndex.where(indexable_name: name.to_s, indexable_id: id, indexable_type: self.class).first_or_create!
-      rankle_index_length = if name == :default
-        RankleIndex.where(indexable_name: name.to_s, indexable_type: self.class).count
-      else
-        RankleIndex.where(indexable_name: name.to_s).count
-      end
-      position = 0 if position < 0
-      position = rankle_index_length - 1 if position >= rankle_index_length
-      rankle_index.update_attribute(:indexable_position, rankle_index_length - 1) unless rankle_index.indexable_position
-      swap_distance  = -1
-      swap_distance *= -1 if rankle_index.indexable_position < position
-      until rankle_index.indexable_position == position
-        if name == :default
-          Ranker.swap(rankle_index, RankleIndex.where(indexable_name: name.to_s, indexable_type: self.class, indexable_position: rankle_index.indexable_position + swap_distance).first)
-        else
-          Ranker.swap(rankle_index, RankleIndex.where(indexable_name: name.to_s, indexable_position: rankle_index.indexable_position + swap_distance).first)
-        end
-      end
+      RankleIndex.update_position self, name, position
     end
 
     def position name = :default
-      RankleIndex.where(indexable_name: name.to_s, indexable_id: id, indexable_type: self.class).first_or_create!.indexable_position
+      RankleIndex.position self, name
     end
   end
 end

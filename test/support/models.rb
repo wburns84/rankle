@@ -1,6 +1,4 @@
-class RankleIndex < ActiveRecord::Base
-  belongs_to :indexable, polymorphic: true
-end
+#require_relative '../../lib/rankle_index'
 
 class Fruit < ActiveRecord::Base
   has_many :rankle_indices, as: :indexable

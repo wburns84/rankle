@@ -1,4 +1,5 @@
 require 'active_record'
+require 'rankle_index'
 require 'rankle/ranker'
 require 'rankle/version'
 
@@ -76,7 +77,7 @@ module Rankle
     end
 
     def position name = :default
-      RankleIndex.where(indexable_name: name.to_s, indexable_id: id, indexable_type: self.class).first_or_create.indexable_position
+      RankleIndex.where(indexable_name: name.to_s, indexable_id: id, indexable_type: self.class).first_or_create!.indexable_position
     end
   end
 end

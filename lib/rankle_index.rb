@@ -5,7 +5,7 @@ class RankleIndex < ActiveRecord::Base
 
   @rankers = {}
 
-  def self.add_ranker klass, ranker
+  def self.ranks klass, ranker
     @rankers[klass] = ranker
   end
 

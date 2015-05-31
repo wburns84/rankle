@@ -24,7 +24,7 @@ module Rankle
     end
 
     def ranks strategy
-      RankleIndex.add_ranker self, Ranker.new(strategy)
+      RankleIndex.ranks self, Ranker.new(strategy)
     end
   end
 

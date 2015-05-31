@@ -47,7 +47,7 @@ module Rankle
     end
 
     def rank name = :default, position
-      RankleIndex.update_position self, name, position
+      RankleIndex.rank self, name, position
     end
 
     def position name = :default

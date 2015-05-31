@@ -20,7 +20,7 @@ class RankleIndex < ActiveRecord::Base
     end
   end
 
-  def self.update_position instance, name, position
+  def self.rank instance, name, position
     rankle_index = RankleIndex.where(indexable_name: name.to_s, indexable_id: instance.id, indexable_type: instance.class).first_or_create!
     rankle_index_length = if name == :default
                             RankleIndex.where(indexable_name: name.to_s, indexable_type: instance.class).count

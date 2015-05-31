@@ -1,12 +1,9 @@
 module Rankle
   class Ranker
-    def self.put klass, proc
-      @rankers ||= {}
-      @rankers[klass] = proc
-    end
+    attr_accessor :strategy
 
-    def self.get klass
-      @rankers[klass] rescue nil
+    def initialize strategy
+      @strategy = strategy
     end
   end
 end

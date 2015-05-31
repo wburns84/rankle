@@ -23,8 +23,8 @@ module Rankle
       end
     end
 
-    def ranks proc
-      Ranker.put self, proc
+    def ranks strategy
+      RankleIndex.add_ranker self, Ranker.new(strategy)
     end
   end
 
@@ -35,14 +35,7 @@ module Rankle
   # instance methods added to ActiveRecord models
   module InstanceMethods
     def set_default_position
-      if Ranker.get(self.class)
-        position = self.class.ranked.each_with_index { |record, index| break index if Ranker.get(self.class).call(self, record) }
-      end unless Ranker.get(self.class).is_a?(Symbol)
-      position = self.class.count - 1 if position.nil? || position.is_a?(Array)
-      rank position
-      if Ranker.get(self.class).is_a?(Symbol)
-        rank Ranker.get(self.class), RankleIndex.where(indexable_name: Ranker.get(self.class)).count
-      end
+      RankleIndex.set_default_position self
     end
 
     # Assigns an explicit position to the record

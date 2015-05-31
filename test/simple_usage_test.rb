@@ -34,7 +34,7 @@ class TestSimpleUsage < Minitest::Test
 
     assert_equal ['apple', 'banana', 'orange'], Fruit.ranked.map(&:name)
 
-    # FIXME: This unfortunate hack reaches into the internals of Rankle::Ranker to reset the test state
-    Rankle::Ranker.instance_variable_get(:@rankers)[Fruit] = nil
+    # FIXME: This unfortunate hack reaches into the internals of RankleIndex to reset the test state
+    RankleIndex.instance_variable_set(:@rankers, {})
   end
 end

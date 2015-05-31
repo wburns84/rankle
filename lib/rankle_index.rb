@@ -3,6 +3,23 @@ require 'ranked-model'
 class RankleIndex < ActiveRecord::Base
   belongs_to :indexable, polymorphic: true
 
+  @rankers = {}
+
+  def self.add_ranker klass, ranker
+    @rankers[klass] = ranker
+  end
+
+  def self.set_default_position instance
+    if @rankers[instance.class] && @rankers[instance.class].strategy
+      position = instance.class.ranked.each_with_index { |record, index| break index if @rankers[instance.class].strategy.call(instance, record) } unless @rankers[instance.class].strategy.is_a?(Symbol)
+    end
+    position = instance.class.count - 1 if position.nil? || position.is_a?(Array)
+    instance.rank position
+    if @rankers[instance.class] && @rankers[instance.class].strategy.is_a?(Symbol)
+      instance.rank @rankers[instance.class].strategy, RankleIndex.where(indexable_name: @rankers[instance.class].strategy).count
+    end
+  end
+
   def self.update_position instance, name, position
     rankle_index = RankleIndex.where(indexable_name: name.to_s, indexable_id: instance.id, indexable_type: instance.class).first_or_create!
     rankle_index_length = if name == :default

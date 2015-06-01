@@ -1,6 +1,6 @@
 class CreateRankleIndex < ActiveRecord::Migration
   def change
-    create_table(:rankle_index) do |t|
+    create_table :rankle_indices do |t|
       t.string  :indexable_name
       t.integer :indexable_id
       t.string  :indexable_type
@@ -9,9 +9,9 @@ class CreateRankleIndex < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    add_index :rankle_index, :indexable_name
-    add_index :rankle_index, :indexable_id
-    add_index :rankle_index, :indexable_type
-    add_index :rankle_index, :indexable_position
+    add_index :rankle_indices, :indexable_name
+    add_index :rankle_indices, :indexable_id
+    add_index :rankle_indices, :indexable_type
+    add_index :rankle_indices, :indexable_position
   end
 end

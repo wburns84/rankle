@@ -34,3 +34,6 @@ Gemfile.lock
 
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
+
+# The db directory is used by the test suite to verify the rankle install generator
+/db

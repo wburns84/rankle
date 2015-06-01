@@ -25,13 +25,4 @@ ActiveRecord::Schema.define do
 
     t.timestamps null: false
   end
-
-  create_table :rankle_indices, :force => true do |t|
-    t.string  :indexable_name
-    t.integer :indexable_id
-    t.string  :indexable_type
-    t.integer :indexable_position
-
-    t.timestamps null: false
-  end
 end

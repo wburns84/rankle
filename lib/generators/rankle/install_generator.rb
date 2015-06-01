@@ -7,7 +7,7 @@ module Rankle
       source_root File.expand_path('../templates/', __FILE__)
 
       def generate_migration
-        migration_template 'migration.rb', 'db/migrate/create_rankle_index.rb'
+        migration_template 'migration.rb', 'db/migrate/create_rankle_indices.rb'
       end
 
       def self.next_migration_number(dir)

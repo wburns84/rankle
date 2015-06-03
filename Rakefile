@@ -7,8 +7,13 @@ Rake::TestTask.new do |t|
   t.verbose = true
 end
 
+Rake::TestTask.new :bench do |t|
+  t.test_files = FileList['test/performance/*_benchmark.rb']
+  t.verbose = true
+end
+
 YARD::Rake::YardocTask.new do |t|
   t.files = ['lib/rankle.rb']
 end
 
-task :default => [:test, :yard]
+task :default => [:test, :bench, :yard]

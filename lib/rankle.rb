@@ -38,7 +38,7 @@ module Rankle
       RankleIndex.set_default_position self
     end
 
-    # Assigns an explicit position to the record
+    # Assigns an explicit position to the record using the default ranker
     #
     # @param format [Integer] the new position
     # @return [Integer or Exception] the new position or an exception if the position could not be set
@@ -60,7 +60,7 @@ ActiveRecord::Base.extend Rankle::ClassMethods
 ActiveRecord::Base.send :include, Rankle::InstanceMethods
 
 class ActiveRecord::Base
-  def self.inherited(child)
+  def self.inherited child
     super
     unless child == ActiveRecord::SchemaMigration || child == RankleIndex
       child.send :after_create, :set_default_position

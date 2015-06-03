@@ -17,14 +17,14 @@ Dir.entries(File.dirname(__FILE__) + '/../../db/migrate').each do |filename|
   File.delete(File.dirname(__FILE__) + '/../../db/migrate/' + filename) rescue nil
 end
 Rails::Generators.invoke 'rankle:install'
-require File.dirname(__FILE__) + '/../../db/migrate/' + Dir.entries(File.dirname(__FILE__) + '/../../db/migrate')[0]
+require File.dirname(__FILE__) + '/../../db/migrate/' + Dir.entries(File.dirname(__FILE__) + '/../../db/migrate').sort.last
 File.delete 'rankle.sqlite3'
 CreateRankleIndices.new.migrate :up
 
 load File.dirname(__FILE__) + '/schema.rb'
 load File.dirname(__FILE__) + '/models.rb'
 
-DatabaseCleaner.strategy = :truncation
+DatabaseCleaner.strategy = :deletion
 
 class Minitest::Test
   def setup

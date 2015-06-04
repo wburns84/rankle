@@ -40,7 +40,8 @@ class RankleIndex < ActiveRecord::Base
   end
 
   def self.position instance, name
-    where(indexable_name: name.to_s, indexable_id: instance.id, indexable_type: instance.class).first_or_create!.indexable_position
+    indexable_position = where(indexable_name: name.to_s, indexable_id: instance.id, indexable_type: instance.class).first_or_create!.indexable_position
+    where(indexable_name: name.to_s).where('indexable_position < ?', indexable_position).count
   end
 
   def self.ranked name

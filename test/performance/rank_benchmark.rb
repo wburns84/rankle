@@ -10,7 +10,6 @@ class BenchmarkRank < Minitest::Benchmark
     1
   end
 
-
   def bench_insert_has_linear_performance
     assert_performance_linear 0.99 do |n|
       trials.times do

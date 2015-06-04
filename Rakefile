@@ -3,12 +3,12 @@ require 'yard'
 require 'rake/testtask'
 
 Rake::TestTask.new do |t|
-  t.test_files = FileList['test/*_test.rb']
+  t.test_files = FileList['test/**/*_test.rb']
   t.verbose = true
 end
 
 Rake::TestTask.new :bench do |t|
-  t.test_files = FileList['test/performance/*_benchmark.rb']
+  t.test_files = FileList['test/**/*_benchmark.rb']
   t.verbose = true
 end
 

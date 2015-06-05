@@ -8,5 +8,9 @@ module Rankle
     def initialize strategy
       @strategy = strategy
     end
+
+    def self.insert target_position, existing_elements
+      return target_position, existing_elements
+    end
   end
 end

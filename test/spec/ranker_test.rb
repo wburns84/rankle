@@ -8,6 +8,18 @@ describe Rankle::Ranker do
           assert_equal [0, []], Rankle::Ranker.insert(0, [])
         end
       end
+
+      describe 'at position -100' do
+        it 'returns 0' do
+          assert_equal [0, []], Rankle::Ranker.insert(-100, [])
+        end
+      end
+
+      describe 'at position 100' do
+        it 'returns 0' do
+          assert_equal [0, []], Rankle::Ranker.insert(100, [])
+        end
+      end
     end
   end
 end

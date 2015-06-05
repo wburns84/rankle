@@ -10,7 +10,7 @@ module Rankle
     end
 
     def self.insert target_position, existing_elements
-      return target_position, existing_elements
+      return 0, existing_elements
     end
   end
 end

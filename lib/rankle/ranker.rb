@@ -1,8 +1,8 @@
 module Rankle
-  MIN_INDEX = -2147483648
-  MAX_INDEX =  2147483647
-
   class Ranker
+    MIN_INDEX = -2147483648
+    MAX_INDEX =  2147483647
+
     attr_accessor :strategy
 
     def initialize strategy
@@ -10,7 +10,9 @@ module Rankle
     end
 
     def self.insert target_position, existing_elements
-      if existing_elements.empty?
+      if existing_elements.count > MAX_INDEX - MIN_INDEX
+        raise IndexError
+      elsif existing_elements.empty?
         return 0, []
       elsif target_position <= 0
         return (MIN_INDEX + existing_elements.first) / 2, existing_elements

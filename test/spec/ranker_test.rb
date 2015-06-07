@@ -50,4 +50,20 @@ describe Rankle::Ranker do
       end
     end
   end
+
+  describe '.balance' do
+    before do
+      @indices = {
+        [-1073741824] => [0],
+        [1073741823]  => [0],
+        [-1, 1]       => [-715827882, 715827883]
+      }
+    end
+
+    it do
+      @indices.each do |indices, expected|
+        assert_equal expected, Rankle::Ranker.balance(indices)
+      end
+    end
+  end
 end

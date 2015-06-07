@@ -20,5 +20,10 @@ module Rankle
         return (MAX_INDEX + existing_elements.last) / 2, existing_elements
       end
     end
+
+    def self.balance indices
+      offset = (MAX_INDEX - MIN_INDEX) / (indices.count + 1)
+      indices.count.times.map { |index| MIN_INDEX + offset * (index + 1) + 1 }
+    end
   end
 end

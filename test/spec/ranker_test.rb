@@ -52,18 +52,24 @@ describe Rankle::Ranker do
   end
 
   describe '.balance' do
-    before do
-      @indices = {
-        [-1073741824] => [0],
-        [1073741823]  => [0],
-        [-1, 1]       => [-715827882, 715827883]
-      }
+    describe 'with default range' do
+      before do
+        @indices = {
+          [-1073741824] => [-1],
+          [1073741823]  => [-1],
+          [-1, 1]       => [-715827883, 715827883]
+        }
+      end
+
+      it do
+        @indices.each do |indices, expected|
+          assert_equal expected, Rankle::Ranker.balance(indices)
+        end
+      end
     end
 
-    it do
-      @indices.each do |indices, expected|
-        assert_equal expected, Rankle::Ranker.balance(indices)
-      end
+    describe 'with custom range' do
+      it{ assert_equal [3, 7], Rankle::Ranker.balance([0, 1], min_index: 0, max_index: 10) }
     end
   end
 end

@@ -21,9 +21,11 @@ module Rankle
       end
     end
 
-    def self.balance indices
-      offset = (MAX_INDEX - MIN_INDEX) / (indices.count + 1)
-      indices.count.times.map { |index| MIN_INDEX + offset * (index + 1) + 1 }
+    def self.balance indices, options = {}
+      min_index = options[:min_index] || MIN_INDEX
+      max_index = options[:max_index] || MAX_INDEX
+      offset = (max_index - min_index) / (indices.count + 1)
+      indices.count.times.map { |index| min_index + (offset * (index + 1)) + index }
     end
   end
 end

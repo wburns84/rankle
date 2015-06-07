@@ -30,6 +30,11 @@ describe Rankle::Ranker do
       end
     end
 
+    describe 'between non-adjacent elements' do
+      it{ assert_equal [0, [-1, 1]], Rankle::Ranker.insert(1, [-1, 1]) }
+      it{ assert_equal [0, [-1, 2]], Rankle::Ranker.insert(1, [-1, 2]) }
+    end
+
     describe 'saturated' do
       before do
         @min_index = Rankle::Ranker::MIN_INDEX

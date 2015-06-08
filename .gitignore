@@ -37,3 +37,4 @@ Gemfile.lock
 
 # The db directory is used by the test suite to verify the rankle install generator
 /db
+/bin

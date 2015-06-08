@@ -13,12 +13,14 @@ ActiveRecord::Base.establish_connection(
 rake = Rake.application
 rake.init
 rake.load_rakefile
-Dir.entries(File.dirname(__FILE__) + '/../../db/migrate').each do |filename|
-  File.delete(File.dirname(__FILE__) + '/../../db/migrate/' + filename) rescue nil
+
+[File.dirname(__FILE__) + '/../../db/migrate',
+ 'rankle.sqlite3'].each do |path|
+  FileUtils::rm_rf(path) if File.exist?(path)
 end
+
 Rails::Generators.invoke 'rankle:install'
 require File.dirname(__FILE__) + '/../../db/migrate/' + Dir.entries(File.dirname(__FILE__) + '/../../db/migrate').sort.last
-File.delete 'rankle.sqlite3'
 CreateRankleIndices.new.migrate :up
 
 load File.dirname(__FILE__) + '/schema.rb'

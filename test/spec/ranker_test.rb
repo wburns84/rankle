@@ -54,6 +54,16 @@ describe Rankle::Ranker do
         Rankle::Ranker::MAX_INDEX = @max_index
       end
     end
+
+    describe 'collision' do
+      it{ assert_equal [0, [-715827883, 715827883]], Rankle::Ranker.insert(1, [-1, 0]) }
+      it{ assert_equal [0, [-715827883, 715827883]], Rankle::Ranker.insert(1, [ 0, 1]) }
+    end
+
+    describe 'cascading collision' do
+      it{ assert_equal [0, [-1288490189, -429496729, 429496731, 1288490191]], Rankle::Ranker.insert(1, [-2, -1, 0, 1]) }
+      it{ assert_equal [0, [-1288490189, -429496729, 429496731, 1288490191]], Rankle::Ranker.insert(1, [-1,  0, 1, 2]) }
+    end
   end
 
   describe '.balance' do

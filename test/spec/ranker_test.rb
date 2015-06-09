@@ -64,6 +64,26 @@ describe Rankle::Ranker do
       it{ assert_equal [0, [-1288490189, -429496729, 429496731, 1288490191]], Rankle::Ranker.insert(1, [-2, -1, 0, 1]) }
       it{ assert_equal [0, [-1288490189, -429496729, 429496731, 1288490191]], Rankle::Ranker.insert(1, [-1,  0, 1, 2]) }
     end
+
+    describe 'half-saturated' do
+      before do
+        @min_index = Rankle::Ranker::MIN_INDEX
+        @max_index = Rankle::Ranker::MAX_INDEX
+        Rankle::Ranker.send :remove_const, :MIN_INDEX
+        Rankle::Ranker.send :remove_const, :MAX_INDEX
+        Rankle::Ranker::MIN_INDEX = -2
+        Rankle::Ranker::MAX_INDEX = 2
+      end
+
+      it{ assert_equal [-1, [-2, 0, 2]], Rankle::Ranker.insert(1, [-2, 0, 2]) }
+
+      after do
+        Rankle::Ranker.send :remove_const, :MIN_INDEX
+        Rankle::Ranker.send :remove_const, :MAX_INDEX
+        Rankle::Ranker::MIN_INDEX = @min_index
+        Rankle::Ranker::MAX_INDEX = @max_index
+      end
+    end
   end
 
   describe '.balance' do

@@ -76,6 +76,7 @@ describe Rankle::Ranker do
       end
 
       it{ assert_equal [-1, [-2, 0, 2]], Rankle::Ranker.insert(1, [-2, 0, 2]) }
+      it{ assert_equal [1, [-2, 0, 2]], Rankle::Ranker.insert(2, [-2, 0, 2]) }
 
       after do
         Rankle::Ranker.send :remove_const, :MIN_INDEX

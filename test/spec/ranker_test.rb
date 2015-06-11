@@ -61,8 +61,8 @@ describe Rankle::Ranker do
     end
 
     describe 'cascading collision' do
-      it{ assert_equal [0, [-1288490189, -429496729, 429496731, 1288490191]], Rankle::Ranker.insert(1, [-2, -1, 0, 1]) }
-      it{ assert_equal [0, [-1288490189, -429496729, 429496731, 1288490191]], Rankle::Ranker.insert(1, [-1,  0, 1, 2]) }
+      it{ assert_equal [-858993459, [-1288490189, -429496729, 429496731, 1288490191]], Rankle::Ranker.insert(1, [-2, -1, 0, 1]) }
+      it{ assert_equal [-858993459, [-1288490189, -429496729, 429496731, 1288490191]], Rankle::Ranker.insert(1, [-1,  0, 1, 2]) }
     end
 
     describe 'half-saturated' do

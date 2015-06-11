@@ -22,7 +22,7 @@ module Rankle
         return (existing_elements[target_position] + existing_elements[target_position - 1]) / 2, existing_elements
       else
         existing_elements = balance existing_elements
-        return 0, existing_elements
+        insert target_position, existing_elements
       end
     end
 

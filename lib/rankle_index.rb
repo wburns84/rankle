@@ -19,24 +19,22 @@ class RankleIndex < ActiveRecord::Base
   end
 
   def self.rank instance, name, position
-    rankle_index = RankleIndex.where(indexable_name: name.to_s, indexable_id: instance.id, indexable_type: instance.class).first_or_create!
-    rankle_index_length = if name == :default
-                            RankleIndex.where(indexable_name: name.to_s, indexable_type: instance.class).count
+    existing_indices = if name == :default
+                            RankleIndex.where indexable_name: name.to_s, indexable_type: instance.class
                           else
-                            RankleIndex.where(indexable_name: name.to_s).count
+                            RankleIndex.where indexable_name: name.to_s
                           end
+    position = existing_indices.length - 1 if position > existing_indices.length
     position = 0 if position < 0
-    position = rankle_index_length - 1 if position >= rankle_index_length
-    rankle_index.update_attribute(:indexable_position, rankle_index_length - 1) unless rankle_index.indexable_position
-    swap_distance  = -1
-    swap_distance *= -1 if rankle_index.indexable_position < position
-    until rankle_index.indexable_position == position
-      if name == :default
-        swap(rankle_index, RankleIndex.where(indexable_name: name.to_s, indexable_type: instance.class, indexable_position: rankle_index.indexable_position + swap_distance).first)
-      else
-        swap(rankle_index, RankleIndex.where(indexable_name: name.to_s, indexable_position: rankle_index.indexable_position + swap_distance).first)
-      end
+    index = RankleIndex.where(indexable_name: name.to_s, indexable_id: instance.id, indexable_type: instance.class).first_or_initialize
+    existing_positions = existing_indices.pluck(:indexable_position).compact
+    existing_positions -= [index.indexable_position] unless index.new_record?
+    indexable_position, existing_positions = Rankle::Ranker.insert(position, existing_positions)
+    existing_positions.each_with_index do |position, index|
+      existing_indices[index].update_attribute(:indexable_position, position) unless existing_indices[index].indexable_position = position
     end
+    index.indexable_position = indexable_position
+    index.save!
   end
 
   def self.position instance, name

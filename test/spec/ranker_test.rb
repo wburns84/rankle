@@ -21,6 +21,10 @@ describe Rankle::Ranker do
         it{ assert_equal [-1073741824, [0]], Rankle::Ranker.insert(0, [0]) }
       end
 
+      describe 'at position 1' do
+        it{ assert_equal [1073741823, [0]], Rankle::Ranker.insert(1, [0]) }
+      end
+
       describe 'at position -100' do
         it{ assert_equal [-1073741824, [0]], Rankle::Ranker.insert(-100, [0]) }
       end

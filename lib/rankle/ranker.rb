@@ -16,7 +16,7 @@ module Rankle
         return 0, []
       elsif target_position <= 0
         return (MIN_INDEX + existing_elements.first) / 2, existing_elements
-      elsif target_position > existing_elements.count
+      elsif target_position >= existing_elements.count
         return (MAX_INDEX + existing_elements.last) / 2, existing_elements
       elsif existing_elements[target_position] - existing_elements[target_position - 1] > 1
         return (existing_elements[target_position] + existing_elements[target_position - 1]) / 2, existing_elements

@@ -38,8 +38,22 @@ class RankleIndex < ActiveRecord::Base
   end
 
   def self.position instance, name
-    indexable_position = where(indexable_name: name.to_s, indexable_id: instance.id, indexable_type: instance.class).first_or_create!.indexable_position
-    where(indexable_name: name.to_s).where('indexable_position < ?', indexable_position).count
+    rankle_indices = Arel::Table.new(:rankle_indices, ActiveRecord::Base)
+    indexable_position = rankle_indices.
+      project(:indexable_position).
+      where(rankle_indices[:indexable_name].
+        eq(name.to_s).
+        and(rankle_indices[:indexable_id].
+          eq(instance.id).
+          and(rankle_indices[:indexable_type].
+            eq(instance.class))))
+    to_return = rankle_indices.
+      project(Arel.star.count).
+      where(rankle_indices[:indexable_name].
+        eq(name.to_s).
+        and(rankle_indices[:indexable_position].
+          lt(indexable_position)))
+    ActiveRecord::Base.connection.execute(to_return.to_sql)[0][0]
   end
 
   def self.ranked name

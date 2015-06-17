@@ -1,3 +1,5 @@
+require_relative './rankle/queries/position_query'
+
 class RankleIndex < ActiveRecord::Base
   belongs_to :indexable, polymorphic: true
 
@@ -38,22 +40,7 @@ class RankleIndex < ActiveRecord::Base
   end
 
   def self.position instance, name
-    rankle_indices = Arel::Table.new(:rankle_indices, ActiveRecord::Base)
-    indexable_position = rankle_indices.
-      project(:indexable_position).
-      where(rankle_indices[:indexable_name].
-        eq(name.to_s).
-        and(rankle_indices[:indexable_id].
-          eq(instance.id).
-          and(rankle_indices[:indexable_type].
-            eq(instance.class))))
-    to_return = rankle_indices.
-      project(Arel.star.count).
-      where(rankle_indices[:indexable_name].
-        eq(name.to_s).
-        and(rankle_indices[:indexable_position].
-          lt(indexable_position)))
-    ActiveRecord::Base.connection.execute(to_return.to_sql)[0][0]
+    PositionQuery.new(instance, name).position
   end
 
   def self.ranked name

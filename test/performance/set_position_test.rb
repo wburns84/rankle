@@ -22,4 +22,12 @@ class TestSetPosition < Minitest::Test
       apple.rank 1
     end
   end
+
+  def test_initializing_position_with_a_proc_makes_eight_queries
+    Fruit.send :ranks, ->(a, b) { a.name < b.name }
+
+    assert_queries(8) do
+      Fruit.create! name: 'apple'
+    end
+  end
 end

@@ -32,6 +32,11 @@ class Minitest::Test
   def setup
     DatabaseCleaner.clean
   end
+
+  def teardown
+    # FIXME: This unfortunate hack reaches into the internals of RankleIndex to reset the test state
+    RankleIndex.instance_variable_set(:@rankers, {})
+  end
 end
 
 def assert_queries(num = 1, &block)

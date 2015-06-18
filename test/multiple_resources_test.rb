@@ -63,8 +63,5 @@ class TestNamedRanking < Minitest::Test
 
     assert_equal 0, apple.position(:produce)
     assert_equal 1, carrot.position(:produce)
-
-    # FIXME: This unfortunate hack reaches into the internals of RankleIndex to reset the test state
-    RankleIndex.instance_variable_set(:@rankers, {})
   end
 end

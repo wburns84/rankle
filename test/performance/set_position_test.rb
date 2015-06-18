@@ -14,4 +14,12 @@ class TestSetPosition < Minitest::Test
       apple.update_attribute :position, 1
     end
   end
+
+  def test_update_rank_makes_three_queries
+    apple  = Fruit.create! name: 'apple'
+
+    assert_queries(3) do
+      apple.rank 1
+    end
+  end
 end

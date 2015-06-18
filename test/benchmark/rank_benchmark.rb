@@ -30,9 +30,5 @@ class BenchmarkRank < Minitest::Benchmark
         n.times { |name| Fruit.create! name: name }
       end
     end
-
-    # FIXME: This unfortunate hack reaches into the internals of RankleIndex to reset the test state
-    RankleIndex.instance_variable_set(:@rankers, {})
-    DatabaseCleaner.clean
   end
 end

@@ -33,8 +33,5 @@ class TestSimpleUsage < Minitest::Test
     Fruit.create! name: 'banana'
 
     assert_equal ['apple', 'banana', 'orange'], Fruit.ranked.map(&:name)
-
-    # FIXME: This unfortunate hack reaches into the internals of RankleIndex to reset the test state
-    RankleIndex.instance_variable_set(:@rankers, {})
   end
 end

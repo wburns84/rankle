@@ -9,9 +9,7 @@ class TestDefaultBehavior < Minitest::Test
     apple  = Fruit.create!
     orange = Fruit.create!
 
-    assert_queries(1) do
-      assert_equal 0, apple.position
-    end
+    assert_equal 0, apple.position
     assert_equal 1, orange.position
   end
 

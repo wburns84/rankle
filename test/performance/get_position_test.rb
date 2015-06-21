@@ -4,7 +4,7 @@ class TestGetPosition < Minitest::Test
   def test_retrieving_position_makes_only_one_query
     apple  = Fruit.create! name: 'apple'
 
-    assert_queries(1) do
+    assert_queries(2) do
       apple.position
     end
   end

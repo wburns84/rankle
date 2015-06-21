@@ -1,6 +1,11 @@
+require 'ranked-model'
 require_relative './rankle/queries/position_query'
 
 class RankleIndex < ActiveRecord::Base
+  include RankedModel
+
+  ranks :row_order, column: :indexable_position, :with_same => :indexable_name
+
   belongs_to :indexable, polymorphic: true
 
   @rankers = {}
@@ -28,19 +33,16 @@ class RankleIndex < ActiveRecord::Base
                           end
     position = existing_indices.length - 1 if position > existing_indices.length
     position = 0 if position < 0
-    index = RankleIndex.where(indexable_name: name.to_s, indexable_id: instance.id, indexable_type: instance.class).first_or_initialize
-    existing_positions = existing_indices.pluck(:indexable_position).compact
-    existing_positions -= [index.indexable_position] unless index.new_record?
-    indexable_position, existing_positions = Rankle::Ranker.insert(position, existing_positions)
-    existing_positions.each_with_index do |position, index|
-      existing_indices[index].update_attribute(:indexable_position, position) unless existing_indices[index].indexable_position = position
-    end
-    index.indexable_position = indexable_position
-    index.save!
+    index = RankleIndex.where(indexable_name: name.to_s, indexable_id: instance.id, indexable_type: instance.class).first_or_create!
+    index.update_attribute(:row_order_position, position)
   end
 
   def self.position instance, name
-    PositionQuery.new(instance, name).position
+    indexable_position = where(indexable_name: name.to_s, indexable_id: instance.id, indexable_type: instance.class).first_or_create!.indexable_position
+    indexable_scope = where(indexable_name: name.to_s)
+    indexable_scope = indexable_scope.where(indexable_type: instance.class) if name == :default
+    indexable_scope = indexable_scope.where('indexable_position < ?', indexable_position)
+    indexable_scope.count
   end
 
   def self.ranked name

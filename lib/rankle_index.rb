@@ -1,5 +1,4 @@
 require 'ranked-model'
-require_relative './rankle/queries/position_query'
 
 class RankleIndex < ActiveRecord::Base
   include RankedModel

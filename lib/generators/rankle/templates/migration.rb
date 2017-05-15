@@ -1,4 +1,4 @@
-class CreateRankleIndices < ActiveRecord::Migration
+class CreateRankleIndices < ActiveRecord::Migration[5.0]
   def change
     create_table :rankle_indices do |t|
       t.string  :indexable_name

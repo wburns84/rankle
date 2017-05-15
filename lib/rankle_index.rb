@@ -17,6 +17,7 @@ class RankleIndex < ActiveRecord::Base
     if @rankers[instance.class] && @rankers[instance.class].strategy
       position = instance.class.ranked.each_with_index { |record, index| break index if @rankers[instance.class].strategy.call(instance, record) } unless @rankers[instance.class].strategy.is_a?(Symbol)
     end
+    position = position.count if position.is_a?(ActiveRecord::Relation)
     position = instance.class.count - 1 if position.nil? || position.is_a?(Array)
     instance.rank position
     if @rankers[instance.class] && @rankers[instance.class].strategy.is_a?(Symbol)
@@ -26,20 +27,20 @@ class RankleIndex < ActiveRecord::Base
 
   def self.rank instance, name, position
     existing_indices = if name == :default
-                            RankleIndex.where indexable_name: name.to_s, indexable_type: instance.class
+                            RankleIndex.where indexable_name: name.to_s, indexable_type: instance.class.to_s
                           else
                             RankleIndex.where indexable_name: name.to_s
                           end
-    position = existing_indices.length - 1 if position > existing_indices.length
+    position = existing_indices.count - 1 if position > existing_indices.count
     position = 0 if position < 0
-    index = RankleIndex.where(indexable_name: name.to_s, indexable_id: instance.id, indexable_type: instance.class).first_or_create!
+    index = RankleIndex.where(indexable_name: name.to_s, indexable_id: instance.id, indexable_type: instance.class.to_s).first_or_create!
     index.update_attribute(:row_order_position, position)
   end
 
   def self.position instance, name
-    indexable_position = where(indexable_name: name.to_s, indexable_id: instance.id, indexable_type: instance.class).first_or_create!.indexable_position
+    indexable_position = where(indexable_name: name.to_s, indexable_id: instance.id, indexable_type: instance.class.to_s).first_or_create!.indexable_position
     indexable_scope = where(indexable_name: name.to_s)
-    indexable_scope = indexable_scope.where(indexable_type: instance.class) if name == :default
+    indexable_scope = indexable_scope.where(indexable_type: instance.class.to_s) if name == :default
     indexable_scope = indexable_scope.where('indexable_position < ?', indexable_position)
     indexable_scope.count
   end
